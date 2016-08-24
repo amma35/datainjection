@@ -197,12 +197,15 @@ class PluginDatainjectionCommonInjectionLib {
       //Store injectClass & primary_type
       $this->injectionClass = $injectionClass;
       $this->primary_type   = self::getItemtypeByInjectionClass($injectionClass);
-
-      //If entity is given stores it, then use root entity
-      if (isset($injection_options['entities_id'])) {
-         $this->entity = $injection_options['entities_id'];
-      } else {
-         $this->entity = 0;
+      if(isset($this->values[$this->primary_type]['entities_id'])){
+         $this->entity = $this->values[$this->primary_type]['entities_id'];
+      }else{
+         //If entity is given stores it, then use root entity
+         if (isset($injection_options['entities_id'])) {
+            $this->entity = $injection_options['entities_id'];
+         } else {
+            $this->entity = 0;
+         }
       }
    }
 
@@ -339,8 +342,7 @@ class PluginDatainjectionCommonInjectionLib {
 
       //2 : id
       // 19 : date_mod
-      // 80 : entity
-      $blacklist = array(2, 19, 80, 201, 202, 203, 204);
+      $blacklist = array(2, 19, 201, 202, 203, 204);
 
       //add document fields
       if (in_array($itemtype, $CFG_GLPI["document_types"])) {
@@ -1253,8 +1255,8 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
    **/
    private function addNecessaryFields() {
-     $this->setValueForItemtype($this->primary_type, 'entities_id', $this->entity);
-     if (method_exists($this->injectionClass,'addSpecificNeededFields')) {
+      $this->setValueForItemtype($this->primary_type, 'entities_id', $this->entity);
+      if (method_exists($this->injectionClass,'addSpecificNeededFields')) {
         $specific_fields = $this->injectionClass->addSpecificNeededFields($this->primary_type,
                                                                           $this->values);
         foreach ($specific_fields as $field => $value) {

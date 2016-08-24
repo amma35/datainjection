@@ -99,9 +99,10 @@ class PluginDatainjectionEngine {
             $mandatory_fields[$mapping->getItemtype()][$mapping->getValue()] = $mapping->isMandatory();
          }
       }
-
-      //Add fields needed for injection
-      $this->addRequiredFields($itemtype, $fields_toinject);
+      if(!isset($fields_toinject[$itemtype]['entities_id'])){
+         //Add fields needed for injection
+         $this->addRequiredFields($itemtype, $fields_toinject);
+      }
 
       //Optional data to be added to the fields to inject (won't be checked !)
       $optional_data = $this->addAdditionalInformations($this->infos);
