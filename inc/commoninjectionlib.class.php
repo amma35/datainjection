@@ -178,7 +178,7 @@ class PluginDatainjectionCommonInjectionLib {
       if (isset($injection_options['mandatory_fields'])) {
          $this->mandatory_fields = $injection_options['mandatory_fields'];
       }
-
+      
       if (isset($injection_options['optional_data'])) {
          $this->optional_infos = $injection_options['optional_data'];
       }
@@ -199,6 +199,7 @@ class PluginDatainjectionCommonInjectionLib {
       $this->primary_type   = self::getItemtypeByInjectionClass($injectionClass);
       if(isset($this->values[$this->primary_type]['entities_id'])){
          $this->entity = $this->values[$this->primary_type]['entities_id'];
+         $this->mandatory_fields[$this->primary_type]['entities_id'] = 1;
       }else{
          //If entity is given stores it, then use root entity
          if (isset($injection_options['entities_id'])) {
@@ -1608,7 +1609,7 @@ class PluginDatainjectionCommonInjectionLib {
 
       $where    = "";
       $continue = true;
-
+      
       $searchOptions = $injectionClass->getOptions($this->primary_type);
 
       //Add sql request checks specific to this itemtype
