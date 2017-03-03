@@ -88,7 +88,7 @@
       } else {
          $text = __('No model currently available', 'datainjection');
 
-         if (Session::haveRight(static::$rightname, UPDATE) ) {
+         if (Session::haveRight(plugin_datainjection_model, CREATE) ) {
 
             $text = sprintf(__('%1$s %2$s'), $text.". ",
                             sprintf(__('%1$s: %2$s'),
@@ -156,7 +156,7 @@
          if ($confirm == 'creation') {
             $message = __('Warning : existing data will be overridden', 'datainjection');
          } else {
-            $message = __("Watch out, you're about to inject datas into GLPI. Are you sure you want to do it ?",
+            $message = __("Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?",
                           'datainjection');
          }
          $alert = "OnClick='return window.confirm(\"$message\");'";
@@ -288,7 +288,6 @@
       $p['nblines']   = $nblines;
 
       unset($_SESSION['datainjection']['go']);
-      $_SESSION["MESSAGE_AFTER_REDIRECT"] = "";
 
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
       Ajax::updateItem("span_injection",$url,$p);
