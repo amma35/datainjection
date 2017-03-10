@@ -88,7 +88,7 @@
       } else {
          $text = __('No model currently available', 'datainjection');
 
-         if (Session::haveRight(plugin_datainjection_model, CREATE) ) {
+         if (Session::haveRight('plugin_datainjection_model', CREATE) ) {
 
             $text = sprintf(__('%1$s %2$s'), $text.". ",
                             sprintf(__('%1$s: %2$s'),
